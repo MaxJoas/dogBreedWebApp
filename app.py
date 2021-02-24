@@ -23,13 +23,6 @@ def _get_img_path(image):
     return os.path.join(app.config['IMG_FOLDER'], image)
 
 
-def _get_ref_img_path(ref):
-    if len(ref.split()) > 1:
-        ref = ref.replace(' ', '_')
-
-    return os.path.join('img/ref', ref + '.jpg')
-
-
 def load_model():
     # load the pre-trained Keras model
     global model
@@ -93,7 +86,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             load_model()
-            file.save(_get_img_path(filename))
+            file.save(os.path.join(app.config['IMG_FOLDER'], filename))
             # preds = Xception_predict_breed(_get_img_path(filename))
             # print(preds)
             # return send_from_directory(app.config['IMG_FOLDER'], filename)
@@ -106,18 +99,7 @@ def upload_file():
             return redirect(request.url)
 
 
-@ app.route('/classified/<image>')
-def result(image):
-    # check if file exists in img folder
-    # process file
-    # render result template
-    # ajax call to delete file?
-    pred = Xception_predict_breed(image)
-    print(pred)
-    return render_template('upload.html')
-
-
-@ app.route('/displayfaces/<filename>')
+@ app.route('/displayimages/<filename>')
 def display_image(filename):
     # print('display_image filename: ' + filename)
     return send_from_directory(app.config['IMG_FOLDER'], filename)
