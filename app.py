@@ -74,6 +74,11 @@ def upload_form():
 
 @app.route('/', methods=['POST'])
 def upload_file():
+    if not os.path.exists('/tmp/'):
+        directory = "tmp"
+        path = os.path.join(directory)
+        os.mkdir(path)
+
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
