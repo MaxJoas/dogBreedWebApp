@@ -91,9 +91,9 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             load_model()
-            file.save(os.path.join(app.config['IMG_FOLDER'], filename))
-            # preds = Xception_predict_breed(_get_img_path(filename))
-            # print(preds)
+            file.save(_get_img_path(filename))
+            preds = Xception_predict_breed(_get_img_path(filename))
+            print(preds)
             return send_from_directory(app.config['IMG_FOLDER'], filename)
             # return redirect(url_for('display_image', filename=filename))
             flash('File successfully uploaded')
