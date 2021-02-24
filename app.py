@@ -1,7 +1,7 @@
 from werkzeug.utils import secure_filename
 import numpy as np
 from glob import glob
-from flask import Flask, flash, request, redirect, render_template, url_for
+from flask import Flask, flash, request, redirect, render_template, url_for, send_from_directory
 import urllib.request
 import os
 from flask import Flask
@@ -14,7 +14,7 @@ app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-IMG_FOLDER = '/temp'
+IMG_FOLDER = '/temp/'
 
 app.config['IMG_FOLDER'] = IMG_FOLDER
 
@@ -44,6 +44,13 @@ def extract_Xception(tensor):
 def path_to_tensor(img_path):
     # loads RGB image as PIL.Image.Image type
     img = image.load_img(img_path, target_size=(224, 224))
+    # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
+    x = image.img_to_array(img)
+    # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
+    return np.expand_dims(x, axis=0)
+
+
+def img_to_tensor(img):
     # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
     x = image.img_to_array(img)
     # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
@@ -87,18 +94,19 @@ def upload_file():
             filename = secure_filename(file.filename)
             load_model()
             file.save(_get_img_path(filename))
-            preds = Xception_predict_breed(_get_img_path(filename))
-            print(preds)
-
+            # preds = Xception_predict_breed(_get_img_path(filename))
+            # print(preds)
+            # return send_from_directory(app.config['IMG_FOLDER'], filename)
+            return redirect(url_for('display_image', filename=filename))
             flash('File successfully uploaded')
-            return redirect('/')
+            # return redirect('/')
 
         else:
             flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
             return redirect(request.url)
 
 
-@app.route('/classified/<image>')
+@ app.route('/classified/<image>')
 def result(image):
     # check if file exists in img folder
     # process file
@@ -107,6 +115,12 @@ def result(image):
     pred = Xception_predict_breed(image)
     print(pred)
     return render_template('upload.html')
+
+
+@ app.route('/displayfaces/<filename>')
+def display_image(filename):
+    # print('display_image filename: ' + filename)
+    return send_from_directory(app.config['IMG_FOLDER'], filename)
 
 
 if __name__ == "__main__":
