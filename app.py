@@ -13,7 +13,7 @@ app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-IMG_FOLDER = 'temp/'
+IMG_FOLDER = '/temp/'
 
 app.config['IMG_FOLDER'] = IMG_FOLDER
 
