@@ -6,8 +6,8 @@ import urllib.request
 import os
 from flask import Flask
 from keras.preprocessing import image
-from tensorflow import keras
 
+import keras
 app = Flask(__name__)
 
 app.secret_key = "secret key"
@@ -86,9 +86,9 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             load_model()
+            file.save(_get_img_path(filename))
             preds = Xception_predict_breed(_get_img_path(filename))
             print(preds)
-            file.save(_get_img_path(filename))
 
             flash('File successfully uploaded')
             return redirect('/')
