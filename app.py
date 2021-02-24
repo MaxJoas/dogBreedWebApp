@@ -13,7 +13,7 @@ app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-IMG_FOLDER = '/tmp/'
+IMG_FOLDER = 'temp/'
 
 app.config['IMG_FOLDER'] = IMG_FOLDER
 
@@ -225,21 +225,23 @@ def upload_file():
             file.save(_get_img_path(filename))
             preds = Xception_predict_breed(_get_img_path(filename))
             print(preds)
-            return send_from_directory(app.config['IMG_FOLDER'], filename)
+            # return send_from_directory(app.config['IMG_FOLDER'], filename)
             # return redirect(url_for('display_image', filename=filename))
-            flash('File successfully uploaded')
+            flash('Thist dog is a {}'.format(preds))
             # return redirect('/')
+            return render_template('upload.html', filename=filename)
 
         else:
             flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
             return redirect(request.url)
 
 
-@ app.route('/displayimages/<filename>')
+@ app.route('/displayimage/<filename>')
 def display_image(filename):
     # print('display_image filename: ' + filename)
     return send_from_directory(app.config['IMG_FOLDER'], filename)
 
 
 if __name__ == "__main__":
-    app.run()
+    # app.run()
+    app.run(host='0.0.0.0', port=3000, debug=True)

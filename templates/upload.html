@@ -1,6 +1,51 @@
-<!doctype html>
-<title>Python Flask File Upload Example</title>
-<h2>Select a file to upload</h2>
+<!DOCTYPE html>
+<html lang="en">
+  <header>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Disasters</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static',filename='style.css')}}"
+   />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </header>
+
+<body>
+<form method="post" action="/" enctype="multipart/form-data">
+<div class="container">
+    <h1>Upload an Image of your Dog
+        <small>classify breed</small>
+    </h1>
+    <div class="avatar-upload">
+        <div class="avatar-edit">
+ <dl>
+		<p>
+			<input type="file" name="file" autocomplete="off" required class="file-upload-wrapper", data-text="Select your file">
+		</p>
+    </dl>
+
+            <label for="imageUpload"></label>
+        </div>
+ <p>
+		<input type="submit" value="Submit">
+	</p>
+
+        <div class="avatar-preview">
+            <div id="background-image: url({{url_for("static", filename= "dog.png")}})">
+            </div>
+        </div>
+    </div>
+
+{% if filename %}
+	<div>
+		<img src="{{ url_for('display_image', filename=filename) }}">
+	</div>
+{% endif %}
 <p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
@@ -12,13 +57,10 @@
 	  {% endif %}
 	{% endwith %}
 </p>
-<form method="post" action="/" enctype="multipart/form-data">
-    <dl>
-		<p>
-			<input type="file" name="file" autocomplete="off" required>
-		</p>
-    </dl>
-    <p>
-		<input type="submit" value="Submit">
-	</p>
+
+
+</div>
+
 </form>
+</body>
+</html>
