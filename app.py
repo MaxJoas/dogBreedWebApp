@@ -89,8 +89,8 @@ def upload_file():
             file.save(os.path.join(app.config['IMG_FOLDER'], filename))
             # preds = Xception_predict_breed(_get_img_path(filename))
             # print(preds)
-            # return send_from_directory(app.config['IMG_FOLDER'], filename)
-            return redirect(url_for('display_image', filename=filename))
+            return send_from_directory(app.config['IMG_FOLDER'], filename)
+            # return redirect(url_for('display_image', filename=filename))
             flash('File successfully uploaded')
             # return redirect('/')
 
