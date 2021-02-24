@@ -6,10 +6,11 @@ h5py==3.1.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
 Keras==2.4.3
+Tenso
 MarkupSafe==1.1.1
 numpy==1.19.5
 PyYAML==5.4.1
 scipy==1.5.4
 Werkzeug==1.0.1
 Keras-Preprocessing==1.1.2
-
+tensorflow==2.4.1
