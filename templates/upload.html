@@ -6,13 +6,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Disasters</title>
+    <title>Dog Classification</title>
     <link
       rel="stylesheet"
       type="text/css"
       href="{{url_for('static',filename='style.css')}}"
    />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </header>
 
 <body>
@@ -62,5 +63,18 @@
 </div>
 
 </form>
+
+    <div class="footer">
+      <p>
+        <a
+          href="https://www.udacity.com/course/data-scientist-nanodegree--nd025"
+          >Udacity Nanodegree</a
+        >
+        | Maximilian Joas |
+        <a href="https://github.com/MaxJoas/disaster_response"
+          >Code on GitHub</a
+        >
+      </p>
+    </div>
 </body>
 </html>
