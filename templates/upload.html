@@ -1,53 +1,57 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
+
+<!-- <body> -->
+<!--     <div class="shadow"> -->
+<!--       <div class="container"> -->
+<!--         <div class="upload-btn-wrapper"> -->
+<!--           <button class="btn">Upload file</button> -->
+<!--           <label class="btn"> -->
+<!--             <input type="file" name="myfile" /> -->
+<!--           </label> -->
+<!--         </div> -->
+<!--       </div<!DOCTYPE html> -->
+
 <html lang="en">
   <header>
+    <style>
+      body {
+        background-image: url({{url_for("static", filename= "dogs.jpg")}});
+      }
+    </style>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Dog Classification</title>
+    <title>Disasters</title>
     <link
       rel="stylesheet"
       type="text/css"
       href="{{url_for('static',filename='style.css')}}"
-   />
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
   </header>
 
-<body>
-<form method="post" action="/" enctype="multipart/form-data">
-<div class="container">
-    <h1>Upload an Image of your Dog
-        <small>classify breed</small>
-    </h1>
-    <div class="avatar-upload">
-        <div class="avatar-edit">
- <dl>
-		<p>
-			<input type="file" name="file" autocomplete="off" required class="file-upload-wrapper", data-text="Select your file">
-		</p>
-    </dl>
+  <body>
+      <div class="wrapper">
+    <div class="section_one">
+      <div style="background: transparent !important" class="jumbotron">
+        <div class="container mt-5">
+          <h1 class="text-center">
+            <a href="/">Dog Breed Classifier</a>
+          </h1>
+<p>
 
-            <label for="imageUpload"></label>
-        </div>
- <p>
-		<input type="submit" value="Submit">
-	</p>
 
-        <div class="avatar-preview">
-            <div id="background-image: url({{url_for("static", filename= "dog.png")}})">
-            </div>
-        </div>
-    </div>
+<!-- displaying classification result if the user uploaded a file -->
+<!-- showing general message otherwise -->
 
 {% if filename %}
-	<div>
-		<img src="{{ url_for('display_image', filename=filename) }}">
-	</div>
-{% endif %}
-<p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
 		<ul class=flashes>
@@ -57,24 +61,94 @@
 		</ul>
 	  {% endif %}
 	{% endwith %}
+    {% else %}
+   <p class="text-center">
+            Upload an image of your dog and find out what breed it is.<br />
+            Find out what happens, if you upload an image of a human
+
+          </p>
+          {% endif %}
+
 </p>
 
 
-</div>
+                 <hr />
 
+          <div class="row">
+            <div class="col-lg-12 form-group-lg">
+                <div class="col-lg-offset-5" align="center">
+
+
+<!-- From for uploading the file -->
+
+<form method="post" action="/" enctype="multipart/form-data">
+
+ <dl>
+		<p>
+          <label class="btn">
+		<input type="file" name="file" autocomplete="off" required class="file-upload-wrapper", data-text="Select your file">
+
+          </label>
+
+			</p>
+    </dl>
+
+            <!-- <label for="imageUpload"></label> -->
+        <dl>
+ <p>
+		<input type="submit" value="Submit">
+	</p>
+        </dl>
 </form>
 
-    <div class="footer">
+
+{% if filename %}
+	<div>
+		<img src="{{ url_for('display_image', filename=filename) }}">
+	</div>
+{% endif %}
+
+            </div>
+
+
+                </div>
+            </div>
+          </div>
+          <p class="text-center font-italic mt-3">
+            A new message is classified based on the learnings from the labeled
+            training data.
+          </p>
+          {% block message %} {% endblock %}
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+<div class="footer">
       <p>
         <a
           href="https://www.udacity.com/course/data-scientist-nanodegree--nd025"
           >Udacity Nanodegree</a
         >
         | Maximilian Joas |
-        <a href="https://github.com/MaxJoas/disaster_response"
+        <a href="https://github.com/MaxJoas/dogBreedWebApp/blob/master/static/style.css"
           >Code on GitHub</a
         >
       </p>
     </div>
-</body>
+  </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

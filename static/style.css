@@ -1,90 +1,118 @@
-body {
-  background: whitesmoke;
-  font-family: "Open Sans", sans-serif;
-}
+@import url("https://fonts.googleapis.com/css?family=VT323");
 
-.container {
-  max-width: 960px;
-  margin: 30px auto;
-  padding: 20px;
-}
+$color: #284cff;
 
-h1 {
-  font-size: 20px;
-  text-align: center;
-  margin: 20px 0 20px;
-  small {
-    display: block;
-    font-size: 15px;
-    padding-top: 8px;
-    color: gray;
-  }
-}
-
-.avatar-upload {
+.upload-btn-wrapper {
   position: relative;
-  max-width: 205px;
-  margin: 50px auto;
-  .avatar-edit {
-    position: absolute;
-    right: 12px;
-    z-index: 1;
-    top: 10px;
-    input {
-      display: none;
-      + label {
-        display: inline-block;
-        width: 34px;
-        height: 34px;
-        margin-bottom: 0;
-        border-radius: 100%;
-        background: #ffffff;
-        border: 1px solid transparent;
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        cursor: pointer;
-        font-weight: normal;
-        transition: all 0.2s ease-in-out;
-        &:hover {
-          background: #f1f1f1;
-          border-color: #d6d6d6;
-        }
-        &:after {
-          content: "\f040";
-          font-family: "FontAwesome";
-          color: #757575;
-          position: absolute;
-          top: 10px;
-          left: 0;
-          right: 0;
-          text-align: center;
-          margin: auto;
-        }
-      }
-    }
-  }
-  .avatar-preview {
-    width: 192px;
-    height: 192px;
-    position: relative;
-    border-radius: 100%;
-    border: 6px solid #f8f8f8;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-    > div {
-      width: 100%;
-      height: 100%;
-      border-radius: 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-  }
+  overflow: hidden;
+  display: inline-block;
 }
-footer {
-  background-color: orange;
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
   position: absolute;
   left: 0;
-  bottom: 0;
-  height: 100px;
-  width: 100%;
-  overflow: hidden;
+  top: 0;
+  opacity: 0;
+}
+
+.shadow {
+  -webkit-border-radius: 0% 0% 100% 100% / 0% 0% 8px 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 2px 3px;
+}
+.container {
+  margin: 0 auto;
+  margin-top: 50px;
+
+  height: 80vh;
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 2px #fff inset, -1px -1px 2px #fff inset;
+  border-radius: 3px/6px;
+}
+
+.list-group-item {
+  background-color: transparent;
+  border-top: 1px solid #ddd;
+  border-radius: 0;
+  color: #fff;
+}
+
+button {
+  flex: 1;
+  padding: 25px 50px;
+  margin: 25px;
+  border-radius: 999px;
+  border: 5px solid $color;
+  font-family: "VT323", monospace;
+  font-size: 25px;
+  text-shadow: 0 3px 5px rgba(#000, 0.25);
+  white-space: nowrap;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  background-image: url(https://web.archive.org/web/20160312084140im_/http://splatoon.nintendo.com/assets/img/nav-bg-fill-blue.png?1443460871);
+  background-repeat: repeat-x;
+  background-position: 0 -100%;
+  transition: 1.5s ease;
+  &:hover {
+    background-position: 500% 100%;
+  }
+  @for $i from 1 through 18 {
+    &:nth-child(#{$i}) {
+      filter: hue-rotate(($i * 20) + deg);
+    }
+  }
+}
+
+header {
+  position: relative;
+  height: 200px;
+  /* background-image: linear-gradient(#ff9d2f, #ff6126); */
+  background-image: url("/static/disaster.jpg");
+  /* change the calc height to a percentage height to get alternate responsive behavior*/
+}
+
+.section_one {
+  margin-top: auto;
+  padding: 100px;
+  /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 15vw)); */
+}
+
+section {
+  margin-top: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* background-image: url("/static/disaster.jpg"); */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.wrapper {
+  min-height: 100%;
+
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */
+  margin-bottom: -50px;
+}
+.footer,
+.push {
+  height: 50px;
 }

@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 IMG_FOLDER = '/tmp/'
 
@@ -283,6 +283,7 @@ def upload_file():
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
+
         if file.filename == '':
             flash('No file selected for uploading')
             return redirect(request.url)
@@ -290,6 +291,10 @@ def upload_file():
             filename = secure_filename(file.filename)
             load_model()
             file.save(_get_img_path(filename))
+            file = image.load_img(_get_img_path(
+                filename), target_size=(224, 224))
+            file.save(_get_img_path(filename))
+
             # preds = Xception_predict_breed(_get_img_path(filename))
             preds = classify_dog(_get_img_path(filename))
             # return send_from_directory(app.config['IMG_FOLDER'], filename)
@@ -311,4 +316,4 @@ def display_image(filename):
 
 if __name__ == "__main__":
     # app.run()
-    app.run(host='0.0.0.0', port=3000, debug=True)
+    app.run(host='0.0.0.0', port=3007, debug=False)
