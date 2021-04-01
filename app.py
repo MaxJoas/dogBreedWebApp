@@ -1,14 +1,13 @@
 from werkzeug.utils import secure_filename
 
-import cv2
+# import cv2
 import numpy as np
-from flask import (Flask, flash, request, redirect, render_template, url_for,
+from flask import (Flask, flash, request, redirect, render_template,
                    send_from_directory)
-import urllib.request
+# import urllib.request
 import os
-from flask import Flask
 from keras.preprocessing import image
-from keras.applications.resnet50 import (ResNet50, decode_predictions,
+from keras.applications.resnet50 import (ResNet50,
                                          preprocess_input)
 import keras
 app = Flask(__name__)
@@ -23,8 +22,8 @@ app.config['IMG_FOLDER'] = IMG_FOLDER
 
 # Global variables for Image classification
 # extract pre-trained face detector
-face_cascade = cv2.CascadeClassifier(
-    'haarcascades/haarcascade_frontalface_alt.xml')
+# face_cascade = cv2.CascadeClassifier(
+#     'haarcascades/haarcascade_frontalface_alt.xml')
 
 
 def _get_img_path(image):
@@ -196,25 +195,22 @@ def Xception_predict_breed(img_path):
 
     # extract bottleneck features
     bottleneck_feature = extract_Xception(path_to_tensor(img_path))
-    print(bottleneck_feature.shape)
     # obtain predicted vector
     predicted_vector = model.predict(bottleneck_feature)
     # return dog breed that is predicted by the model
     return dog_names[np.argmax(predicted_vector)]
 
 
-ResNet50_model = ResNet50(weights='imagenet')
-
-
-def face_detector(img_path):
-    img = cv2.imread(img_path)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray)
-    return len(faces) > 0
+# def face_detector(img_path):
+#     img = cv2.imread(img_path)
+#     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#     faces = face_cascade.detectMultiScale(gray)
+#     return len(faces) > 0
 
 
 def ResNet50_predict_labels(img_path):
     # returns prediction vector for image located at img_path
+    ResNet50_model = ResNet50(weights='imagenet')
 
     img = preprocess_input(path_to_tensor(img_path))
     return np.argmax(ResNet50_model.predict(img))
@@ -238,13 +234,13 @@ def classify_dog(path):
 
     # check what kind of image is given
     is_dog = dog_detector(path)
-    is_human = face_detector(path)
+    # is_human = face_detector(path)
 
     # breaks if image is neither dog or human
-    if not is_dog and not is_human:
-        message = "The image could not be identified as dog or human face. \n \
+    if not is_dog:
+        message = "The image could not be identified as dog. \n \
             Please provide a valid image"
-        return message
+    return message
 
     # detect dog breed
     if is_dog:
@@ -253,12 +249,12 @@ def classify_dog(path):
         message = "Your dog's breed is {}".format(breed)
         return message
 
-    if is_human:
-        breed = Xception_predict_breed(path)
-        message = "This looks more like a human! \n Anyway, let's see which \
-            dog breed looks similar to this human. \n This human looks \
-            like a {}".format(breed)
-        return message
+    # if is_human:
+    #     breed = Xception_predict_breed(path)
+    #     message = "This looks more like a human! \n Anyway, let's see which \
+    #         dog breed looks similar to this human. \n This human looks \
+    #         like a {}".format(breed)
+    #     return message
 
 
 def allowed_file(filename):
