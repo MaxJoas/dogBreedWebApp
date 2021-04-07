@@ -220,8 +220,6 @@ def ResNet50_predict_labels(img_path):
 def dog_detector(img_path):
     prediction = ResNet50_predict_labels(img_path)
     return ((prediction <= 268) & (prediction >= 151))
-
-
 def classify_dog(path):
     """Classifies a given image wheter it is a dog or human and returns breed of the dog
 
